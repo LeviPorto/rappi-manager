@@ -6,11 +6,11 @@ import com.levi.rappimanager.service.RestaurantService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RatingSuperRestaurantListener implements RatingUpdateListener {
+public class RatingSuperRestaurantUpdateListener implements RatingUpdateListener {
 
     private final RestaurantService restaurantService;
 
-    public RatingSuperRestaurantListener(final RestaurantService restaurantService) {
+    public RatingSuperRestaurantUpdateListener(final RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 
