@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/manager/genericFoodTag")
+@RequestMapping("/manager/restaurant")
 public class RestaurantController extends AbstractCrudController<Restaurant> {
 
     public RestaurantController(AbstractCrudService<Restaurant> service) {

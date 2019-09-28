@@ -66,5 +66,4 @@ public class Restaurant extends CompanyContact implements Serializable, Identifi
     @JsonBackReference("combos")
     private List<Combo> combos;
 
-
 }

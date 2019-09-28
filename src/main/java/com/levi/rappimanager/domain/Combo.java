@@ -31,5 +31,4 @@ public class Combo extends GenericFood implements Serializable, IdentifiedEntity
     @JsonBackReference("genericFoodTags")
     private List<GenericFoodTag> genericFoodTags;
 
-
 }
