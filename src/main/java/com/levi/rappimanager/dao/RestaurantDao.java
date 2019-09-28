@@ -43,7 +43,7 @@ public class RestaurantDao {
         Root<Restaurant> root = criteria.from(Restaurant.class);
 
         criteria.multiselect(root.get("id"), root.get("name"), root.get("category"), root.get("cost"), root.get("latitude"), root.get("longitude"),
-                root.get("rating"), root.get("isIFoodDelivery"), root.get("isSuperRestaurant"), root.get("hasTrackedDelivery"))
+                root.get("rating"), root.get("isSuperRestaurant"), root.get("hasTrackedDelivery"))
                 .where(getCriteriaBuilder().equal(root.get("city"), restaurantSearchDTO.getUserCity()));
 
         if (restaurantSearchDTO.getSearchedName() != null) {
@@ -53,8 +53,7 @@ public class RestaurantDao {
         List<Restaurant> restaurants = session.createQuery(criteria).getResultList();
 
         return restaurants.stream().map(restaurant -> new FilteredRestaurantDTO(restaurant.getCategory(),
-                restaurant.getId(), restaurant.getIsIFoodDelivery(), restaurant.getIsSuperRestaurant(),
-                restaurant.getHasTrackedDelivery(), null, null,
+                restaurant.getId(), restaurant.getIsSuperRestaurant(), restaurant.getHasTrackedDelivery(), null, null,
                 null, null, null, null)).collect(Collectors.toList());
     }
 

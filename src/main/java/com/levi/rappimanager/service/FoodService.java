@@ -36,4 +36,8 @@ public class FoodService extends AbstractCrudService<Food> {
         return filteredFoods;
     }
 
+    public List<Food> retrieveByRestaurant(Integer restaurantId) {
+        return repository.findByRestaurantId(restaurantId);
+    }
+
 }

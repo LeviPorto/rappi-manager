@@ -36,4 +36,8 @@ public class ComboService extends AbstractCrudService<Combo> {
         return filteredCombos;
     }
 
+    public List<Combo> retrieveByRestaurant(Integer restaurantId) {
+        return repository.findByRestaurantId(restaurantId);
+    }
+
 }

@@ -35,4 +35,8 @@ public class PromotionService extends AbstractCrudService<Promotion> {
 
         return filteredPromotions;
     }
+
+    public List<Promotion> retrieveByRestaurant(Integer restaurantId) {
+        return repository.findByRestaurantId(restaurantId);
+    }
 }

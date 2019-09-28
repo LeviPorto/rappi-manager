@@ -3,10 +3,7 @@ package com.levi.rappimanager.controller;
 import com.levi.rappimanager.crud.AbstractCrudController;
 import com.levi.rappimanager.domain.Combo;
 import com.levi.rappimanager.service.ComboService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,11 @@ public class ComboController extends AbstractCrudController<Combo> {
     @GetMapping("/search")
     public List<Combo> getFilteredCombos(@RequestParam String searchedName, @RequestParam String userCity) {
         return service.retrieveFilteredCombos(searchedName, userCity);
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public List<Combo> findByRestaurant(@PathVariable Integer restaurantId) {
+        return service.retrieveByRestaurant(restaurantId);
     }
 
 }

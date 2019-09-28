@@ -15,7 +15,6 @@ public class FilteredRestaurantDTO {
 
     public RestaurantCategory restaurantCategory;
     public Integer restaurantId;
-    private boolean isIFoodDelivery;
     private boolean isSuperRestaurant;
     private boolean hasTrackedDelivery;
     private Double distanceFromCustomer;

@@ -6,6 +6,7 @@ import com.levi.rappimanager.domain.Restaurant;
 import com.levi.rappimanager.dto.FilteredRestaurantDTO;
 import com.levi.rappimanager.dto.RestaurantSearchDTO;
 import com.levi.rappimanager.dto.enumeration.SortSearch;
+import com.levi.rappimanager.filter.RestaurantFilter;
 import com.levi.rappimanager.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,15 @@ public class RestaurantService extends AbstractCrudService<Restaurant> {
     private final RestaurantDao dao;
     private final RestaurantRepository repository;
     private final DistanceCalculatorService distanceCalculatorService;
+    private final List<RestaurantFilter> restaurantFilters;
 
     public RestaurantService(final RestaurantDao dao, final RestaurantRepository repository,
-                             final DistanceCalculatorService distanceCalculatorService) {
+                             final DistanceCalculatorService distanceCalculatorService, List<RestaurantFilter> restaurantFilters) {
         super(repository);
         this.dao = dao;
         this.repository = repository;
         this.distanceCalculatorService = distanceCalculatorService;
+        this.restaurantFilters = restaurantFilters;
     }
 
     public List<FilteredRestaurantDTO> retrieveFilteredRestaurants(RestaurantSearchDTO restaurantSearchDTO) {
@@ -34,6 +37,10 @@ public class RestaurantService extends AbstractCrudService<Restaurant> {
         fillFilteredRestaurantsWithDeliveryFee(restaurantSearchDTO.getUserId(), userCityRestaurants);
         fillFilteredRestaurantsWithDeliveryTime(restaurantSearchDTO.getUserId(), userCityRestaurants);
         fillFilteredRestaurantsWithDeliveryDistance(restaurantSearchDTO.getUserId(), userCityRestaurants);
+
+        for (RestaurantFilter restaurantFilter : restaurantFilters) {
+            userCityRestaurants = restaurantFilter.filterRestaurant(restaurantSearchDTO, userCityRestaurants);
+        }
 
         return sortFilteredRestaurants(userCityRestaurants, restaurantSearchDTO.getSortSearch());
     }

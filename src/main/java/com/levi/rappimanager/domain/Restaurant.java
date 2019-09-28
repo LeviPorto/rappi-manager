@@ -36,9 +36,6 @@ public class Restaurant extends CompanyContact implements Serializable, Identifi
     private Boolean isSuperRestaurant;
 
     @Column
-    private Boolean isIFoodDelivery;
-
-    @Column
     private Boolean hasTrackedDelivery;
 
     @Column
