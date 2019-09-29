@@ -27,7 +27,7 @@ public class DeliveryManUpdateOccupationToFreeListener implements CoordinateCrea
         if(calculateDistanceBetweenPoints(coordinateDTO.getLatitude(), coordinateDTO.getLongitude(),
                 restaurant.getLatitude(), restaurant.getLongitude()) < DISTANCE_CONSIDERED_DELIVERED) {
             deliveryMan.setOccupation(Occupation.FREE);
-            deliveryManService.create(deliveryMan);
+            deliveryManService.update(deliveryMan, deliveryMan.getId());
         }
     }
 }

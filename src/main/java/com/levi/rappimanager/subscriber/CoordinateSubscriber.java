@@ -15,7 +15,7 @@ public class CoordinateSubscriber {
         this.coordinateDispatcher = coordinateDispatcher;
     }
 
-    @KafkaListener(topics = "COORDINATE_EVENT_SOURCING", groupId = "1234", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "COORDINATE_EVENT_SOURCING", groupId = "1234", containerFactory = "coordinateKafkaListenerContainerFactory")
     public void processCoordinateEventSourcing(@Payload CoordinateDTO coordinateDTO) {
         coordinateDispatcher.notifyCoordinateCreateListeners(coordinateDTO);
     }

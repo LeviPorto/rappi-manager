@@ -1,5 +1,6 @@
 package com.levi.rappimanager.config;
 
+import com.levi.rappimanager.dto.CoordinateDTO;
 import com.levi.rappimanager.dto.EvaluatedRestaurantDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -41,6 +42,25 @@ public class KafkaConsumerConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, EvaluatedRestaurantDTO> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, EvaluatedRestaurantDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, CoordinateDTO> coordinateConsumerFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, CoordinateDTO.class);
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        return new DefaultKafkaConsumerFactory<>(props);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, CoordinateDTO> coordinateKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, CoordinateDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(coordinateConsumerFactory());
         return factory;
     }
 }

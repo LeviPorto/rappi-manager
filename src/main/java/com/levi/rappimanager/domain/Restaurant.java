@@ -21,8 +21,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "restaurant", indexes = {@Index(name = "city_index", columnList="city"),
-        @Index(name = "name_index", columnList="name")})
 public class Restaurant extends CompanyContact implements Serializable, IdentifiedEntity {
 
     @Id
