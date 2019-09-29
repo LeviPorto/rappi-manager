@@ -7,11 +7,11 @@ import com.levi.rappimanager.service.DeliveryManService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderAutomaticPassToDeliveryMan implements OrderCreateListener {
+public class OrderAutomaticJobPassToDeliveryMan implements OrderCreateListener {
 
     private final DeliveryManService deliveryManService;
 
-    public OrderAutomaticPassToDeliveryMan(DeliveryManService deliveryManService) {
+    public OrderAutomaticJobPassToDeliveryMan(DeliveryManService deliveryManService) {
         this.deliveryManService = deliveryManService;
     }
 

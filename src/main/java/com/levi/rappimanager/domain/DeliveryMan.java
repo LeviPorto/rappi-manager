@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
+@Table(name = "delivery_man", indexes = {@Index(name = "occupation_index", columnList="occupation")})
 public class DeliveryMan implements Serializable, IdentifiedEntity {
 
     @Id
@@ -24,5 +25,8 @@ public class DeliveryMan implements Serializable, IdentifiedEntity {
 
     @Column
     private Occupation occupation;
+
+    @Column
+    private String phoneIMEI;
 
 }

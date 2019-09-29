@@ -22,9 +22,9 @@ public class AbstractCrudService<T extends IdentifiedEntity> {
         return repository.save(entity);
     }
 
-    public T update(T combo, Integer id) {
-        combo.setId(id);
-        return repository.save(combo);
+    public T update(T entity, Integer id) {
+        entity.setId(id);
+        return repository.save(entity);
     }
 
     public void remove(Integer id) {
