@@ -15,7 +15,7 @@ public class OrderSubscriber {
         this.orderDispatcher = orderDispatcher;
     }
 
-    @KafkaListener(topics = "ORDER_EVENT_SOURCING", groupId = "1234", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "ORDER_EVENT_SOURCING", groupId = "1234", containerFactory = "orderKafkaListenerContainerFactory")
     public void processOrderEventSourcing(@Payload OrderDTO orderDTO) {
         orderDispatcher.notifyOrderCreateListeners(orderDTO);
     }

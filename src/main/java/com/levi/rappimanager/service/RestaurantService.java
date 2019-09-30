@@ -17,8 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO tirar consultas dentro do for
-
 @Service
 public class RestaurantService extends AbstractCrudService<Restaurant> {
 
@@ -67,6 +65,10 @@ public class RestaurantService extends AbstractCrudService<Restaurant> {
         return sortFilteredRestaurants(userCityRestaurants, restaurantSearchDTO.getSortSearch());
     }
 
+    public Restaurant retrieveByDeliveryMan(Integer deliveryManId) {
+        return repository.findByDeliveryManId(deliveryManId);
+    }
+
     @Cacheable(value = "FILTERED_RESTAURANT_BY_USER_CITY", key = "{#restaurantSearchDTO.userCity}", unless = "#result == null || #result.isEmpty()")
     public List<FilteredRestaurantDTO> retrieveUserCityRestaurants(RestaurantSearchDTO restaurantSearchDTO) {
         return dao.findUserCityRestaurants(restaurantSearchDTO);
@@ -74,8 +76,6 @@ public class RestaurantService extends AbstractCrudService<Restaurant> {
 
     private List<FilteredRestaurantDTO> sortFilteredRestaurants(List<FilteredRestaurantDTO> userCityRestaurants, SortSearch sortSearch) {
         switch (sortSearch) {
-            case HIGHEST_RATED:
-                return userCityRestaurants.stream().sorted(Comparator.comparingDouble(restaurant -> repository.findById(restaurant.getRestaurantId()).get().getRating())).collect(Collectors.toList());
             case SHORTEST_DELIVERY_FEE:
                 return userCityRestaurants.stream().sorted(Comparator.comparingDouble(FilteredRestaurantDTO::getDeliveryFee)).collect(Collectors.toList());
             case SHORTEST_DISTANCE:

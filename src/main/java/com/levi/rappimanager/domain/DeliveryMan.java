@@ -29,4 +29,8 @@ public class DeliveryMan implements Serializable, IdentifiedEntity {
     @Column
     private String phoneIMEI;
 
+    public static boolean hasFreeOccupation(DeliveryMan deliveryMan, Occupation occupation) {
+        return occupation == deliveryMan.occupation;
+    }
+
 }

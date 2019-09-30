@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Restaurant extends CompanyContact implements Serializable, IdentifiedEntity {
+public class Restaurant extends CompanyContact implements IdentifiedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +66,18 @@ public class Restaurant extends CompanyContact implements Serializable, Identifi
     @OneToMany(mappedBy = "restaurant")
     @JsonBackReference("deliveryMan")
     private List<DeliveryMan> deliveryMan;
+
+    public Restaurant(Integer id, String name, RestaurantCategory category, Double cost, Double latitude, Double longitude, Double rating,
+                      Boolean isSuperRestaurant, Boolean hasTrackedDelivery) {
+        this.id = id;
+        this.category = category;
+        this.cost = cost;
+        this.rating = rating;
+        this.isSuperRestaurant = isSuperRestaurant;
+        this.hasTrackedDelivery = hasTrackedDelivery;
+        setName(name);
+        setLatitude(latitude);
+        setLongitude(longitude);
+    }
 
 }

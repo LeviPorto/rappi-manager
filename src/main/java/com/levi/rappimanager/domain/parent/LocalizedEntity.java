@@ -4,10 +4,11 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 @Data
 @MappedSuperclass
-abstract class LocalizedEntity {
+abstract class LocalizedEntity implements Serializable {
 
     @Column
     private Double latitude;

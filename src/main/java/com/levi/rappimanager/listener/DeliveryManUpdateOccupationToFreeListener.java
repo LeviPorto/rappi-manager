@@ -24,10 +24,14 @@ public class DeliveryManUpdateOccupationToFreeListener implements CoordinateCrea
     public void coordinateWasCreated(CoordinateDTO coordinateDTO) {
         DeliveryMan deliveryMan = deliveryManService.retrieveById(coordinateDTO.getDeliveryManId());
         Restaurant restaurant = deliveryMan.getRestaurant();
-        if(calculateDistanceBetweenPoints(coordinateDTO.getLatitude(), coordinateDTO.getLongitude(),
-                restaurant.getLatitude(), restaurant.getLongitude()) < DISTANCE_CONSIDERED_DELIVERED) {
+        if(arrivedAtDestination(coordinateDTO, restaurant)) {
             deliveryMan.setOccupation(Occupation.FREE);
             deliveryManService.update(deliveryMan, deliveryMan.getId());
         }
+    }
+
+    private boolean arrivedAtDestination(CoordinateDTO coordinateDTO, Restaurant restaurant) {
+        return calculateDistanceBetweenPoints(coordinateDTO.getLatitude(), coordinateDTO.getLongitude(),
+                restaurant.getLatitude(), restaurant.getLongitude()) < DISTANCE_CONSIDERED_DELIVERED;
     }
 }

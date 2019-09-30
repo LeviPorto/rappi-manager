@@ -18,7 +18,7 @@ public class PromotionItem implements Serializable, IdentifiedEntity {
     private Double quantity;
 
     @OneToOne
-    private Food food;
+    private Restaurant restaurant;
 
     @ManyToOne(targetEntity = Promotion.class)
     @JoinColumn(name = "promotion_id", nullable = false)

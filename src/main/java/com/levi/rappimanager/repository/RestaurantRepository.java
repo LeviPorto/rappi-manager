@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RestaurantRepository extends AbstractCrudRepository<Restaurant> {
+
+    Restaurant findByDeliveryManId(Integer deliveryManId);
+
 }

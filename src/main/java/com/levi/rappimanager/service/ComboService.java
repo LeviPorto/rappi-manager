@@ -4,8 +4,10 @@ import com.levi.rappimanager.crud.AbstractCrudService;
 import com.levi.rappimanager.domain.Combo;
 import com.levi.rappimanager.dto.FilteredRestaurantDTO;
 import com.levi.rappimanager.dto.RestaurantSearchDTO;
+import com.levi.rappimanager.dto.enumeration.SortSearch;
 import com.levi.rappimanager.repository.ComboRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,18 @@ public class ComboService extends AbstractCrudService<Combo> {
         this.restaurantService = restaurantService;
     }
 
-    public List<Combo> retrieveFilteredCombos(String searchedName, String userCity) {
-        List<FilteredRestaurantDTO> filteredRestaurants = restaurantService.retrieveFilteredRestaurants(RestaurantSearchDTO.builder().userCity(userCity).build());
+    public List<Combo> retrieveFilteredCombos(String searchedName, String userCity, Integer userId) {
+        List<FilteredRestaurantDTO> filteredRestaurants = restaurantService.retrieveFilteredRestaurants(RestaurantSearchDTO
+                .builder().userCity(userCity).sortSearch(SortSearch.DEFAULT).userId(userId).build());
         List<Combo> filteredCombos = new ArrayList<>();
 
         if (searchedName != null) {
-            filteredRestaurants.forEach(restaurant -> restaurant.getCombos().stream()
-                    .filter(promotion -> promotion.getName().equals(searchedName)).forEach(filteredCombos::add));
+            filteredRestaurants.forEach(restaurant -> {
+                List<Combo> combos = restaurant.getCombos();
+                if(!CollectionUtils.isEmpty(combos)) {
+                    combos.stream().filter(combo -> combo.getName().equals(searchedName)).forEach(filteredCombos::add);
+                }
+            });
         } else {
             filteredRestaurants.forEach(restaurant -> filteredCombos.addAll(restaurant.getCombos()));
         }

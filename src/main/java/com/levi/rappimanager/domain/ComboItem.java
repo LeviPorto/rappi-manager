@@ -20,6 +20,9 @@ public class ComboItem implements Serializable, IdentifiedEntity {
     @OneToOne
     private Food food;
 
+    @OneToOne
+    private Restaurant restaurant;
+
     @ManyToOne(targetEntity = Combo.class)
     @JoinColumn(name = "combo_id", nullable = false)
     private Combo combo;

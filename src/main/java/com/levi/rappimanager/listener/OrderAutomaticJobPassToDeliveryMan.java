@@ -6,6 +6,8 @@ import com.levi.rappimanager.dto.OrderDTO;
 import com.levi.rappimanager.service.DeliveryManService;
 import org.springframework.stereotype.Component;
 
+import static com.levi.rappimanager.domain.DeliveryMan.hasFreeOccupation;
+
 @Component
 public class OrderAutomaticJobPassToDeliveryMan implements OrderCreateListener {
 
@@ -18,7 +20,10 @@ public class OrderAutomaticJobPassToDeliveryMan implements OrderCreateListener {
     @Override
     public void orderWasCreate(OrderDTO orderDTO) {
         DeliveryMan firstFreeDeliveryMan = deliveryManService.retrieveFirstFreeDeliveryMan(orderDTO.getRestaurantId());
-        firstFreeDeliveryMan.setOccupation(Occupation.WAITING_ACCEPTANCE);
+        if(hasFreeOccupation(firstFreeDeliveryMan, Occupation.FREE)) {
+            firstFreeDeliveryMan.setOccupation(Occupation.WAITING_ACCEPTANCE);
+            deliveryManService.update(firstFreeDeliveryMan, firstFreeDeliveryMan.getId());
+        }
     }
 
 }

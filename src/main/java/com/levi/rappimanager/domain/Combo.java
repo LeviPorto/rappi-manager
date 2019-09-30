@@ -27,8 +27,4 @@ public class Combo extends GenericFood implements Serializable, IdentifiedEntity
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "combo")
-    @JsonBackReference("genericFoodTags")
-    private List<GenericFoodTag> genericFoodTags;
-
 }

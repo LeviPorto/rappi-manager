@@ -4,8 +4,10 @@ import com.levi.rappimanager.crud.AbstractCrudService;
 import com.levi.rappimanager.domain.Promotion;
 import com.levi.rappimanager.dto.FilteredRestaurantDTO;
 import com.levi.rappimanager.dto.RestaurantSearchDTO;
+import com.levi.rappimanager.dto.enumeration.SortSearch;
 import com.levi.rappimanager.repository.PromotionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,18 @@ public class PromotionService extends AbstractCrudService<Promotion> {
         this.restaurantService = restaurantService;
     }
 
-    public List<Promotion> retrieveFilteredPromotions(String searchedName, String userCity) {
-        List<FilteredRestaurantDTO> filteredRestaurants = restaurantService.retrieveFilteredRestaurants(RestaurantSearchDTO.builder().userCity(userCity).build());
+    public List<Promotion> retrieveFilteredPromotions(String searchedName, String userCity, Integer userId) {
+        List<FilteredRestaurantDTO> filteredRestaurants = restaurantService.retrieveFilteredRestaurants(RestaurantSearchDTO
+                .builder().userCity(userCity).sortSearch(SortSearch.DEFAULT).userId(userId).build());
         List<Promotion> filteredPromotions = new ArrayList<>();
 
         if (searchedName != null) {
-            filteredRestaurants.forEach(restaurant -> restaurant.getPromotions().stream()
-                    .filter(promotion -> promotion.getName().equals(searchedName)).forEach(filteredPromotions::add));
+            filteredRestaurants.forEach(restaurant -> {
+                List<Promotion> promotions = restaurant.getPromotions();
+                if(!CollectionUtils.isEmpty(promotions)) {
+                    promotions.stream().filter(promotion -> promotion.getName().equals(searchedName)).forEach(filteredPromotions::add);
+                }
+            });
         } else {
             filteredRestaurants.forEach(restaurant -> filteredPromotions.addAll(restaurant.getPromotions()));
         }
